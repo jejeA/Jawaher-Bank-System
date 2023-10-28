@@ -37,11 +37,14 @@ class AccountHolderControllerTest {
     private Account account;
 
 
+    //method set up
     @BeforeEach
     public void setup() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
+
+    //Test Delete request for Delete account holder
     @Test
     void testDeleteAccountHolder() throws Exception {
         int idToDelete = 8789; //
@@ -56,6 +59,7 @@ class AccountHolderControllerTest {
     }
 
 
+    //Test Patch request for method Partial Update Account Holder
     @Test
     public void testPartialUpdateAccountHolder() throws Exception {
         int id = 1009;

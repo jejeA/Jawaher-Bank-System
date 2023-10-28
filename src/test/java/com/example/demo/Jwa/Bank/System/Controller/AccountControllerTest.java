@@ -31,13 +31,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         @MockBean
         private AccountServiceImp accountServiceImp;
 
-
+        //set up
         @BeforeEach
         public void setup() {
             mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         }
 
-
+       // Test method Get all account
      @Test
      void getAllAccountTest() throws Exception {
       // Mock data to return when the service is called
@@ -60,7 +60,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     assertTrue(responseContent.contains("9000.0"));
 
 }
-
+      // Test method post new account
      @Test
      void addAccountTest() throws Exception {
          // Mock account data for the request
@@ -76,7 +76,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
                  .andReturn();
      }
 
-
+     // Test method post deposit
      @Test
      void depositTest() throws Exception {
          // Mock data for the request
@@ -93,6 +93,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
                  .andReturn();
      }
 
+     // Test method Get for show balance
      @Test
      void testShowBalance() throws Exception {
          int accountNumber = 1290;
@@ -104,7 +105,3 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
                  .andExpect(content().string(balanceMessage));
      }
  }
-
-
-
-
