@@ -135,85 +135,114 @@ public class AccountServiceImp implements AccountInterface{
 
 
 
+    // Deposit money into an account
     @Override
     public String deposit(int accountNumber, double amount) {
         Account account = accountRepository.findById(accountNumber).orElse(null);
+     //check if account not null and amount bigger than 0 then apply statement inside if
         if (account != null && amount > 0) {
             double balance = account.getBalance();
+            //put the new balance in account
             account.setBalance(balance+amount);
+          //save the new balance in repository
             accountRepository.save(account);
+          //return the statement and the new balance
             return "Successful deposit "+"\n The new balance = " + account.getBalance();
-        }
+        } // if the statement inside if condition not applied then go to else and print this
         return " Account not found, insufficient balance, or invalid deposit amount";
     }
+
+    // Withdraw money from an account
     @Override
     public String  withdraw(int accountNumber, double amount) {
         Account account = accountRepository.findById(accountNumber).orElse(null);
+        //check if account not null and amount bigger than 0 then apply statement inside if
         if (account != null && amount > 0 && amount <= account.getBalance()) {
             double balance =account.getBalance();
+            //put the new balance in account
             account.setBalance(balance-amount);
+            //save the new balance in repository
             accountRepository.save(account);
+            //return the statement and the new balance
             return "Successful Withdraw"+ "\n The new Balance ="+account.getBalance();
-        }
+        }// if the statement inside if condition not applied then go to else and print this
         return  " Account not found, insufficient balance, or invalid withdraw amount";
     }
+
+    // Transfer money between two accounts
     @Override
     public String transfer(int sourceAccountNumber, int targetAccountNumber, double amount) {
         // Business logic for transferring money between accounts
         Account sourceAccount = accountRepository.findById(sourceAccountNumber).orElse(null);
         Account targetAccount = accountRepository.findById(targetAccountNumber).orElse(null);
-
+        //check if first account  and secont account not null and amount bigger than 0 then apply statement inside if
         if (sourceAccount != null && targetAccount != null && amount > 0 && amount <= sourceAccount.getBalance()) {
             double sourceBalance = sourceAccount.getBalance();
             sourceAccount.setBalance(sourceBalance - amount);
+            // transfer from one account to another
             double targetBalance = targetAccount.getBalance();
             targetAccount.setBalance(targetBalance + amount);
-
+            // save the account balance in repository
             accountRepository.save(sourceAccount);
             accountRepository.save(targetAccount);
+            //return seccessful transfer
             return "Successful transfer";
-        }
+        }   // if the statement inside if condition not applied then go to else and print this
         return "Account not found, insufficient balance, or invalid transfer amount";
     }
 
+    // Get the account balance
     @Override
     public String showBalance(int accountNumber) {
+        //search about the account by id
         Account account = accountRepository.findById(accountNumber).orElse(null);
+        // check if not null
         if (account != null) {
+            //return the statement when the account found and have a balance
             return "The balance is " +account.getBalance();
-
         }
         return "The Id is wrong";
     }
 
+
+    // Add a new account
     @Override
     public Account addAccount(Account account) {
+        //save the new account in the repository
         return accountRepository.save(account);
     }
 
+
+    // Get a list of all accounts
     @Override
     public List<Account> getAllAccount() {
+        //return the all account using method findAll
         return accountRepository.findAll();
     }
 
 
-
-
+    // Delete accounts by balance
     @Override
     public String deleteAccountByBalance(double balance) {
+        //delete the account by balance
         accountRepository.deleteByBalance(balance);
         return "Account has been successfully deleted.";
     }
 
-@Override
-    public String updateAccount(int accountNumber, Account account) {
-            if (accountRepository.existsById(accountNumber)) {
-                account.setAccountNumber(accountNumber); // Ensure the ID is set for the update
-                accountRepository.save(account);
-                return "account updated Successfully";
 
-            }
-            return "account not updated Successfully";
+    // Update an existing account
+    @Override
+    public String updateAccount(int accountNumber, Account account) {
+        //check if account exists or no
+            if (accountRepository.existsById(accountNumber)) {
+                // if exists the account then updated
+                account.setAccountNumber(accountNumber);
+                //save in the repository
+                accountRepository.save(account);
+             //  return "account updated Successfully" when the successfully
+                return "account updated Successfully";
+                //  return "account not updated Successfully"
+            }return "account not updated Successfully";
 
         }
     }

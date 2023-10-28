@@ -31,10 +31,8 @@ class AccountHolderControllerTest {
     private WebApplicationContext webApplicationContext;
     private MockMvc mockMvc;
     private final ObjectMapper objectMapper = new ObjectMapper();
-
     @MockBean
     private AccountHolderServiceImp accountHolderServiceImp;
-
     @MockBean
     private Account account;
 
@@ -50,7 +48,6 @@ class AccountHolderControllerTest {
 
         // Mock the service to handle the account holder deletion
         when(accountHolderServiceImp.deleteAccountHolder(idToDelete)).thenReturn("Account holder deleted successfully");
-
         mockMvc.perform(MockMvcRequestBuilders.delete("/delete/{id}", idToDelete)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())

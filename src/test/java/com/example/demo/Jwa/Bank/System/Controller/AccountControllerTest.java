@@ -26,6 +26,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         private MockMvc mockMvc;
         private final ObjectMapper objectMapper=new ObjectMapper();
 
+
+        //create object using notation MockBean
         @MockBean
         private AccountServiceImp accountServiceImp;
 
@@ -36,10 +38,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         }
 
 
-@Test
-void getAllAccountTest() throws Exception {
-    // Mock data to return when the service is called
-    List<Account> accounts = Arrays.asList(
+     @Test
+     void getAllAccountTest() throws Exception {
+      // Mock data to return when the service is called
+      List<Account> accounts = Arrays.asList(
             new Account("Business" ,1290, 10000.0, AccountStatus.CheckingAccount),
             new Account("Business" ,6773, 9000.0, AccountStatus.SavingAccount)
     );
@@ -80,7 +82,6 @@ void getAllAccountTest() throws Exception {
          // Mock data for the request
          int accountNumber = 187348;
          double amount = 1000.0;
-
          // Mock the service to handle the deposit
          String message = "Deposit successful";
          when(accountServiceImp.deposit(accountNumber, amount)).thenReturn(message);
@@ -95,10 +96,8 @@ void getAllAccountTest() throws Exception {
      @Test
      void testShowBalance() throws Exception {
          int accountNumber = 1290;
-         String balanceMessage = "Your balance is $10000.00";
-
+         String balanceMessage = "Your balance is 10000.00";
          when(accountServiceImp.showBalance(accountNumber)).thenReturn(balanceMessage);
-
          mockMvc.perform(get("/balance/{accountNumber}", accountNumber)
                          .contentType(MediaType.APPLICATION_JSON))
                  .andExpect(status().isOk())
