@@ -18,14 +18,13 @@ public class  AccountController {
 // Create object for service class
 
 
-    //requset method for get All account
+    //requset method for get All account with error handling and without
+
+
 //    @GetMapping("/accounts")
 //    public List<Account> getAllAccount() {
-//    try{
-//        return accountServiceImp.getAllAccount();
-//    }catch (Exception e){
-//        return
-//    }
+//    return accountServiceImp.getAllAccount();
+//       }
     @GetMapping("/accounts")
     public ResponseEntity<?> getAllAccount() {
         try {
